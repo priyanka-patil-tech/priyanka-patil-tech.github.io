@@ -59,16 +59,51 @@ document.querySelectorAll('.timeline-item, .project-card, .skill-category').forE
     observer.observe(el);
 });
 
-// Add hover effect to skill badges
-document.querySelectorAll('.skill-badge').forEach(badge => {
-    badge.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px) scale(1.05)';
+// Enhanced skill cloud interactions
+document.querySelectorAll('.skill-item').forEach((skill, index) => {
+    // Stagger animation on load
+    skill.style.animationDelay = `${index * 0.05}s`;
+    skill.classList.add('fade-in');
+
+    // Random floating animation
+    const randomDelay = Math.random() * 3;
+    const randomDuration = 3 + Math.random() * 2;
+    skill.style.animation = `fadeIn 0.6s ease-out ${index * 0.05}s backwards, skillFloat ${randomDuration}s ease-in-out ${randomDelay}s infinite`;
+
+    // Interactive hover effect
+    skill.addEventListener('mouseenter', function() {
+        // Highlight related skills
+        const skillText = this.querySelector('span').textContent;
+        document.querySelectorAll('.skill-item').forEach(s => {
+            if (s !== this) {
+                s.style.opacity = '0.4';
+            }
+        });
     });
-    
-    badge.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
+
+    skill.addEventListener('mouseleave', function() {
+        document.querySelectorAll('.skill-item').forEach(s => {
+            s.style.opacity = '1';
+        });
     });
 });
+
+// Add skill float animation to CSS dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes skillFloat {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-10px) rotate(2deg);
+        }
+        75% {
+            transform: translateY(-5px) rotate(-2deg);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Dynamic year in footer
 const currentYear = new Date().getFullYear();
@@ -133,7 +168,92 @@ if (heroTitle) {
     heroTitle.innerHTML = text;
 }
 
+// Hero stats counter animation
+const animateCounter = (element, target, suffix = '') => {
+    let current = 0;
+    const increment = target / 50;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target + suffix;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current) + suffix;
+        }
+    }, 30);
+};
+
+// Trigger counter animation when stats are visible
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statItems = document.querySelectorAll('.stat-value');
+            statItems.forEach(item => {
+                const text = item.textContent;
+                if (text.includes('%')) {
+                    animateCounter(item, parseInt(text), '%');
+                } else if (text.includes('K')) {
+                    animateCounter(item, parseFloat(text) * 1000, 'K+');
+                }
+            });
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+    statsObserver.observe(heroStats);
+}
+
+// Add particle effect to hero background
+const createParticles = () => {
+    const heroBackground = document.querySelector('.hero-background');
+    if (!heroBackground) return;
+
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 217, 255, 0.5);
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation: particleFloat ${5 + Math.random() * 10}s linear infinite;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        heroBackground.appendChild(particle);
+    }
+
+    const particleStyle = document.createElement('style');
+    particleStyle.textContent = `
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(particleStyle);
+};
+
+createParticles();
+
 // Console message for developers
-console.log('%c👋 Hello, Developer!', 'font-size: 20px; font-weight: bold; color: #e94560;');
+console.log('%c👋 Hello, Developer!', 'font-size: 20px; font-weight: bold; color: #0076CE;');
 console.log('%cInterested in the code? Check out the repository!', 'font-size: 14px; color: #1a1a2e;');
-console.log('%chttps://github.com/priyanka-ingale', 'font-size: 12px; color: #16213e;');
+console.log('%chttps://github.com/priyanka-patil-tech', 'font-size: 12px; color: #0076CE;');
+console.log('%c⚡ Built with passion for tech infrastructure', 'font-size: 12px; color: #00FF88;');
