@@ -1,0 +1,12 @@
+Add these projects in Featured projects list 
+
+1. Tech Debt Negotiator:
+refer folder "TechDebtNegotiator" in Projects
+
+2. AI Price Pilot: 
+refer folder "AIPricePilot" in Projects
+
+3.OpenManageIntegrationforMicrosoftSystemCenter
+migration to microservice infrastructure architecture of application used with  Microsoft System Center 
+
+ 4. 

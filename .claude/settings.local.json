@@ -2,7 +2,35 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(python3:*)",
+      "Bash(pandoc --track-changes=all \"C:\\\\Users\\\\priya\\\\OneDrive\\\\Dell\\\\Resumes\\\\SoftwareEngineer\\\\Priyanka Patil.docx\" -o /tmp/resume.md)",
+      "Read(//tmp/**)",
+      "Bash(py -3 -c ':*)",
+      "Bash(python -m markitdown \"511 Presentation.pptx\")",
+      "Bash(py --version)",
+      "Bash(where python3 *)",
+      "Bash(where py *)",
+      "Bash(py -m markitdown \"511 Presentation.pptx\")",
+      "Bash(py -m pip install \"markitdown[pptx]\")",
+      "Bash(py -m markitdown /tmp/511_Presentation.pptx)",
+      "Bash(py 'C:\\\\Users\\\\priya\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\97fab324-31ed-4fbb-9f87-f3ea4803c6b1\\\\deaad226-02be-4cfd-9d69-c4b7d90df27f\\\\skills\\\\pptx/scripts/thumbnail.py' 511_Presentation.pptx thumbnails)",
+      "Bash(py C:/Users/priya/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/97fab324-31ed-4fbb-9f87-f3ea4803c6b1/deaad226-02be-4cfd-9d69-c4b7d90df27f/skills/pptx/scripts/office/unpack.py 511_Presentation.pptx unpacked/)",
+      "Bash(py pptx_skill/scripts/office/unpack.py 511_Presentation.pptx unpacked/)",
+      "Bash(py build_slides.py)",
+      "Bash(py /tmp/build_slides.py)",
+      "Bash(py \"C:/tmp/build_slides.py\")",
+      "Bash(py C:/tmp/pptx_skill/scripts/office/pack.py C:/Users/priya/AppData/Local/Temp/unpacked C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx --original C:/Users/priya/AppData/Local/Temp/511_Presentation.pptx)",
+      "Bash(py C:/Users/priya/AppData/Local/Temp/pptx_skill/scripts/office/pack.py C:/Users/priya/AppData/Local/Temp/unpacked C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx --original C:/Users/priya/AppData/Local/Temp/511_Presentation.pptx)",
+      "Bash(py -m markitdown \"C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx\")",
+      "Read(//c/Users/priya/AppData/Local/Temp/**)",
+      "Bash(py C:/Users/priya/AppData/Local/Temp/pptx_skill/scripts/office/soffice.py --headless --convert-to pdf 511_Presentation_new.pptx)",
+      "Bash(where soffice *)",
+      "Bash(where libreoffice *)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(py C:/Users/priya/AppData/Local/Temp/pptx_skill/scripts/thumbnail.py C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx C:/Users/priya/AppData/Local/Temp/thumbnails)",
+      "Bash(py -c ' *)"
     ]
   }
 }

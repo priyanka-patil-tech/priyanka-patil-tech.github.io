@@ -12,6 +12,61 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Project Slider
+(function () {
+    const sliderTrack = document.getElementById('sliderTrack');
+    const sliderDots = document.getElementById('sliderDots');
+    const sliderPrev = document.getElementById('sliderPrev');
+    const sliderNext = document.getElementById('sliderNext');
+
+    if (!sliderTrack) return;
+
+    const slides = sliderTrack.querySelectorAll('.slider-card');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+    let autoSlideInterval;
+
+    // Create dots
+    slides.forEach(function (_, i) {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function () { goToSlide(i); resetAutoSlide(); });
+        sliderDots.appendChild(dot);
+    });
+
+    function goToSlide(index) {
+        currentSlide = index;
+        sliderTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+        document.querySelectorAll('.slider-dot').forEach(function (dot, i) {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    sliderPrev.addEventListener('click', function () {
+        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        resetAutoSlide();
+    });
+
+    sliderNext.addEventListener('click', function () {
+        goToSlide((currentSlide + 1) % totalSlides);
+        resetAutoSlide();
+    });
+
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(function () {
+            goToSlide((currentSlide + 1) % totalSlides);
+        }, 4000);
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+
+    startAutoSlide();
+})();
+
 // Mobile menu toggle
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navLinks = document.querySelector('.nav-links');
@@ -138,7 +193,7 @@ window.addEventListener('scroll', () => {
 // Parallax effect for hero section
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const heroVisual = document.querySelector('.hero-visual');
+    const heroVisual = document.querySelector('.hero-left');
     
     if (heroVisual && scrolled < window.innerHeight) {
         heroVisual.style.transform = `translateY(${scrolled * 0.3}px)`;
