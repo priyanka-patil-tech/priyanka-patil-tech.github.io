@@ -30,7 +30,8 @@
       "Read(//c/Program Files/**)",
       "Read(//c/Program Files \\(x86\\)/**)",
       "Bash(py C:/Users/priya/AppData/Local/Temp/pptx_skill/scripts/thumbnail.py C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx C:/Users/priya/AppData/Local/Temp/thumbnails)",
-      "Bash(py -c ' *)"
+      "Bash(py -c ' *)",
+      "Bash(git push *)"
     ]
   }
 }
