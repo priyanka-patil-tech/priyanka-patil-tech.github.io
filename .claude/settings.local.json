@@ -32,7 +32,15 @@
       "Bash(py C:/Users/priya/AppData/Local/Temp/pptx_skill/scripts/thumbnail.py C:/Users/priya/AppData/Local/Temp/511_Presentation_new.pptx C:/Users/priya/AppData/Local/Temp/thumbnails)",
       "Bash(py -c ' *)",
       "Bash(git push *)",
-      "Bash(py -3 -c ' *)"
+      "Bash(py -3 -c ' *)",
+      "Bash(ls -la \"C:\\\\Users\\\\priya\\\\OneDrive\\\\Dell\\\\MSIS-UW\\\\Q3\\\\521\\\\GroupAssignment\\\\HospitAI\")",
+      "Bash(where python *)",
+      "Bash('C:\\\\Users\\\\priya\\\\AppData\\\\Local\\\\Python\\\\bin\\\\python.exe' -c ' *)",
+      "Bash(PYTHONIOENCODING=utf-8 'C:\\\\Users\\\\priya\\\\AppData\\\\Local\\\\Python\\\\bin\\\\python.exe' -c ' *)",
+      "Bash(where soffice.exe)",
+      "Read(//c/Users/priya/AppData/Local/claude-cli-nodejs/**)",
+      "Bash(ls -lat \"C:\\\\Users\\\\priya\\\\Pictures\\\\Screenshots\" 2>&1 | head -5 *)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\priya\\\\OneDrive\\\\Dell\\\\Resumes\\\\Portfolio\\\\priyanka-patil-tech.github.io\\\\images\\\\AIPricePilot\" *)"
     ]
   }
 }

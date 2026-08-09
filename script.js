@@ -8,6 +8,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 behavior: 'smooth',
                 block: 'start'
             });
+
+            // Give project cards a little "lift" so it's obvious which one the link pointed to
+            if (target.classList.contains('project-card')) {
+                target.classList.remove('project-card-jump');
+                void target.offsetWidth; // restart animation if clicked again
+                target.classList.add('project-card-jump');
+                target.addEventListener('animationend', () => {
+                    target.classList.remove('project-card-jump');
+                }, { once: true });
+            }
         }
     });
 });
@@ -18,6 +28,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const sliderDots = document.getElementById('sliderDots');
     const sliderPrev = document.getElementById('sliderPrev');
     const sliderNext = document.getElementById('sliderNext');
+    const sliderContainer = document.querySelector('.slider-container');
 
     if (!sliderTrack) return;
 
@@ -25,6 +36,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const totalSlides = slides.length;
     let currentSlide = 0;
     let autoSlideInterval;
+    let autoSlidePaused = false; // stays true once a visitor engages with a project
 
     // Create dots
     slides.forEach(function (_, i) {
@@ -54,15 +66,35 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 
     function startAutoSlide() {
+        clearInterval(autoSlideInterval);
         autoSlideInterval = setInterval(function () {
             goToSlide((currentSlide + 1) % totalSlides);
         }, 4000);
     }
 
-    function resetAutoSlide() {
+    function stopAutoSlide() {
         clearInterval(autoSlideInterval);
-        startAutoSlide();
     }
+
+    function resetAutoSlide() {
+        if (!autoSlidePaused) startAutoSlide();
+    }
+
+    // Pause for as long as the pointer is resting over the slider (hover)
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+        sliderContainer.addEventListener('mouseleave', function () {
+            if (!autoSlidePaused) startAutoSlide();
+        });
+    }
+
+    // Stop for good once a visitor clicks into any project — don't yank the slide out from under them
+    sliderTrack.addEventListener('click', function (e) {
+        if (e.target.closest('a, .slider-card')) {
+            autoSlidePaused = true;
+            stopAutoSlide();
+        }
+    });
 
     startAutoSlide();
 })();

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HospitAI · Priyanka Patil</title>
+    <meta name="description" content="HospitAI — a multimodal reality-auditing platform that quantifies the gap between hotel marketing photos and guest reality using OpenCV vision lenses and CNN Grad-CAM.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple:   #7C3AED;
+            --purple-light: #A78BFA;
+            --cyan:     #06B6D4;
+            --green:    #10B981;
+            --orange:   #F59E0B;
+            --pink:     #EC4899;
+            --red:      #EF4444;
+            --dark:     #0D0D1A;
+            --dark2:    #13132A;
+            --dark3:    #1A1A3E;
+            --text:     #E2E8F0;
+            --muted:    #94A3B8;
+            --font-display: 'Crimson Pro', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(13,13,26,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(6,182,212,.2);
+            padding: .9rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-back {
+            display: flex; align-items: center; gap: .5rem;
+            color: var(--cyan); text-decoration: none;
+            font-weight: 600; font-size: .9rem;
+            transition: gap .2s;
+        }
+        .nav-back:hover { gap: .8rem; }
+        .nav-title { font-family: var(--font-display); font-size: 1.1rem; color: white; }
+        .nav-links-right { display: flex; gap: 1rem; }
+        .nav-links-right a {
+            padding: .45rem 1rem; border-radius: 50px; font-size: .85rem; font-weight: 600;
+            text-decoration: none; transition: all .2s;
+            border: 1px solid rgba(6,182,212,.5); color: var(--cyan);
+        }
+        .nav-links-right a:hover { background: rgba(6,182,212,.15); transform: translateY(-2px); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 90vh;
+            background: linear-gradient(135deg, #0D0D1A 0%, #0f1a2e 40%, #0a1e2a 100%);
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 6rem 2rem 4rem;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(6,182,212,.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 30%, rgba(124,58,237,.1) 0%, transparent 50%);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: .5rem;
+            background: rgba(6,182,212,.15); border: 1px solid rgba(6,182,212,.4);
+            border-radius: 50px; padding: .4rem 1.1rem;
+            font-size: .8rem; font-weight: 600; color: var(--cyan);
+            text-transform: uppercase; letter-spacing: 1.5px;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 700; line-height: 1.1;
+            background: linear-gradient(135deg, #fff 0%, var(--cyan) 50%, var(--purple-light) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.2rem;
+        }
+        .hero-sub {
+            font-size: 1.15rem; color: var(--muted); max-width: 720px; margin: 0 auto 2.5rem;
+        }
+        .hero-metrics {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+        .hero-metric {
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 12px; padding: .8rem 1.4rem; text-align: center;
+        }
+        .hero-metric .val {
+            font-family: var(--font-display); font-size: 2rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--purple-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-metric .lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: .1rem; }
+        .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .hero-cta a {
+            display: inline-flex; align-items: center; gap: .6rem;
+            padding: .85rem 1.8rem; border-radius: 50px; font-weight: 700;
+            text-decoration: none; font-size: .95rem; transition: all .25s;
+        }
+        .cta-primary { background: linear-gradient(135deg, var(--cyan), #0891B2); color: white; box-shadow: 0 4px 20px rgba(6,182,212,.4); }
+        .cta-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(6,182,212,.6); }
+        .cta-back { border: 2px solid rgba(255,255,255,.15); color: var(--muted); }
+        .cta-back:hover { background: rgba(255,255,255,.05); transform: translateY(-3px); }
+
+        /* ── SECTION ── */
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-label {
+            display: inline-flex; align-items: center; gap: .5rem;
+            font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: .8rem;
+        }
+        .section-title {
+            font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 700; color: white; margin-bottom: 1rem;
+        }
+        .section-desc { color: var(--muted); max-width: 720px; margin-bottom: 3rem; }
+
+        .bg-alt { background: var(--dark2); }
+        .bg-alt2 { background: var(--dark3); }
+
+        /* ── PROBLEM ── */
+        .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .problem-card {
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px; padding: 1.8rem;
+        }
+        .problem-card .cost {
+            font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; margin-bottom: .3rem;
+        }
+        .problem-card p { color: var(--muted); font-size: .9rem; }
+
+        /* ── DATA STRATEGY ── */
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+        .stack-card {
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px; padding: 1.5rem;
+            transition: transform .2s, border-color .2s;
+        }
+        .stack-card:hover { transform: translateY(-4px); border-color: rgba(6,182,212,.4); }
+        .stack-icon { font-size: 2rem; margin-bottom: .8rem; }
+        .stack-title { font-weight: 700; color: white; margin-bottom: .5rem; }
+        .stack-items { list-style: none; }
+        .stack-items li { color: var(--muted); font-size: .85rem; padding: .15rem 0; }
+        .stack-items li::before { content: '· '; color: var(--cyan); }
+
+        /* ── PIPELINE (reused for CNN layers + multimodal pipeline) ── */
+        .pipeline {
+            display: flex; flex-wrap: wrap; gap: 0; justify-content: center;
+            position: relative; margin: 2rem 0;
+        }
+        .agent {
+            flex: 1; min-width: 150px; max-width: 190px;
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 14px; padding: 1.3rem 1rem; text-align: center;
+            position: relative; margin: .4rem;
+            transition: transform .2s, border-color .2s;
+        }
+        .agent:hover { transform: translateY(-4px); }
+        .agent-num {
+            width: 26px; height: 26px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .72rem; font-weight: 700;
+            margin: 0 auto .6rem;
+        }
+        .agent-icon { font-size: 1.7rem; margin-bottom: .5rem; }
+        .agent-name { font-weight: 700; font-size: .87rem; color: white; margin-bottom: .3rem; }
+        .agent-desc { font-size: .73rem; color: var(--muted); line-height: 1.4; }
+        .agent-type {
+            font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            margin-top: .6rem; padding: .18rem .55rem; border-radius: 50px;
+            display: inline-block;
+        }
+        .type-cv { background: rgba(6,182,212,.15); color: var(--cyan); }
+        .type-ai { background: rgba(124,58,237,.15); color: var(--purple-light); }
+
+        .pipeline-arrow {
+            display: flex; align-items: center; color: var(--muted); font-size: 1.3rem;
+            padding: 0 .15rem; align-self: center;
+        }
+
+        /* ── FIGURES (chart / screenshot embeds) ── */
+        .figure {
+            margin: 1.5rem 0; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px; padding: 1rem; text-align: center;
+        }
+        .figure img {
+            width: 100%; max-width: 100%; border-radius: 8px; display: block; margin: 0 auto;
+        }
+        .figure figcaption {
+            color: var(--muted); font-size: .82rem; margin-top: .8rem; line-height: 1.5;
+        }
+        .figure figcaption strong { color: var(--text); }
+        .figure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 700px) { .figure-grid { grid-template-columns: 1fr; } }
+
+        /* ── LENS TABLE ── */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+        th {
+            text-align: left; padding: .8rem 1rem;
+            background: rgba(6,182,212,.15);
+            color: var(--cyan); font-size: .78rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        td { padding: .7rem 1rem; border-bottom: 1px solid rgba(255,255,255,.06); font-size: .87rem; color: var(--muted); }
+        td:first-child { color: white; font-weight: 500; }
+        tr:hover td { background: rgba(255,255,255,.03); }
+
+        /* ── METRICS ── */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .metric-card {
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px; padding: 1.2rem; text-align: center;
+            transition: transform .2s;
+        }
+        .metric-card:hover { transform: translateY(-3px); }
+        .metric-val {
+            font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; line-height: 1;
+            margin-bottom: .3rem;
+        }
+        .metric-lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; }
+        .metric-sub { font-size: .68rem; color: var(--muted); margin-top: .3rem; opacity: .7; }
+        .risk-low { color: var(--green); }
+        .risk-med { color: var(--orange); }
+        .risk-high { color: var(--red); }
+
+        .badge-compliant {
+            background: rgba(16,185,129,.15); color: var(--green);
+            padding: .2rem .7rem; border-radius: 50px; font-size: .78rem; font-weight: 700;
+            display: inline-block;
+        }
+        .badge-medium {
+            background: rgba(245,158,11,.15); color: var(--orange);
+            padding: .2rem .7rem; border-radius: 50px; font-size: .78rem; font-weight: 700;
+            display: inline-block;
+        }
+
+        /* ── DECISIONS (framework comparison) ── */
+        .decisions { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .decision-card {
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px; padding: 1.6rem;
+        }
+        .decision-card h3 { color: white; font-weight: 700; margin-bottom: .5rem; font-size: 1rem; }
+        .decision-card .chosen {
+            display: inline-flex; align-items: center; gap: .4rem;
+            background: rgba(6,182,212,.12); color: var(--cyan);
+            border-radius: 50px; padding: .3rem .8rem; font-size: .78rem; font-weight: 600;
+            margin-bottom: .8rem;
+        }
+        .decision-card p { color: var(--muted); font-size: .86rem; }
+        .decision-card ul { margin: .6rem 0 0 1.1rem; color: var(--muted); font-size: .84rem; }
+        .decision-card li { margin-bottom: .25rem; }
+
+        /* ── TEST CASES ── */
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .test-card {
+            border-radius: 16px; padding: 1.8rem;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .test-card h3 { font-weight: 700; color: white; margin-bottom: .3rem; }
+        .test-card .sub { font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
+        .test-result { display: flex; justify-content: space-between; padding: .4rem 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: .85rem; }
+        .test-result:last-child { border-bottom: none; }
+        .test-result span { color: var(--muted); }
+        .test-result strong { color: white; }
+        .tc1 { background: rgba(6,182,212,.06); }
+        .tc2 { background: rgba(236,72,153,.06); }
+
+        /* ── ETHICAL / LIMITATIONS ── */
+        .ethical-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+        .ethical-card {
+            border-radius: 14px; padding: 1.5rem;
+            background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+        }
+        .ethical-card .risk-label {
+            font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: .2rem .6rem; border-radius: 50px; margin-bottom: .8rem; display: inline-block;
+            background: rgba(245,158,11,.15); color: var(--orange);
+        }
+        .ethical-card h3 { color: white; font-weight: 700; margin-bottom: .5rem; font-size: .95rem; }
+        .ethical-card p { color: var(--muted); font-size: .83rem; }
+
+        /* ── QUOTE ── */
+        .quote-card {
+            background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08));
+            border: 1px solid rgba(6,182,212,.25); border-radius: 16px;
+            padding: 2rem; text-align: center; max-width: 780px; margin: 0 auto;
+        }
+        .quote-card p { font-family: var(--font-display); font-size: 1.3rem; color: white; font-style: italic; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark); border-top: 1px solid rgba(255,255,255,.06);
+            padding: 2.5rem 2rem; text-align: center;
+        }
+        footer a { color: var(--cyan); text-decoration: none; }
+        footer p { color: var(--muted); font-size: .85rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .problem-grid, .versions, .decisions { grid-template-columns: 1fr; }
+            .pipeline { flex-direction: column; align-items: center; }
+            .pipeline-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-back">← Back to Portfolio</a>
+    <span class="nav-title">HospitAI</span>
+    <div class="nav-links-right">
+        <a href="index.html#hospit-ai">Portfolio Card</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div style="position:relative;z-index:1;width:100%">
+        <div style="display:flex;justify-content:center;margin-bottom:1rem;">
+            <span class="hero-badge">🏨 AI / MSIS Group Project · Computer Vision · NLP</span>
+        </div>
+        <h1>HospitAI</h1>
+        <p class="hero-sub">"Catfish-No!" — a multimodal reality-auditing framework that quantifies the gap between a hotel's marketing photos and guest-uploaded reality, and flags maintenance issues automatically from guest photos, so operators fix the right thing before it becomes a 1-star review.</p>
+
+        <div class="hero-metrics">
+            <div class="hero-metric">
+                <div class="val">6</div>
+                <div class="lbl">OpenCV Analytical Lenses</div>
+            </div>
+            <div class="hero-metric">
+                <div class="val">2</div>
+                <div class="lbl">CNN Frameworks Benchmarked</div>
+            </div>
+            <div class="hero-metric">
+                <div class="val">8,000</div>
+                <div class="lbl">Synthetic Reviews Audited</div>
+            </div>
+            <div class="hero-metric">
+                <div class="val">50+</div>
+                <div class="lbl">Hotels (Client Simulation)</div>
+            </div>
+        </div>
+
+        <div class="hero-cta">
+            <a href="#vds-engine" class="cta-primary">📊 See the Visual Discrepancy Score ↓</a>
+            <a href="index.html" class="cta-back">← Portfolio</a>
+        </div>
+    </div>
+</section>
+
+<!-- BUSINESS PROBLEM -->
+<section class="bg-alt">
+    <div class="container">
+        <div class="section-label" style="color:var(--orange)">01 · Business Problem</div>
+        <h2 class="section-title">Data Blindness</h2>
+        <p class="section-desc"><strong style="color:white">Client scenario:</strong> UrbanStay Collective, a simulated 50+ property hotel group. Star ratings look "okay," but growth is stagnant — and a single average score can't tell you <em>which</em> amenity is causing pain, or whether the problem is a <strong>Marketing Gap</strong> (ads oversell reality) or a <strong>Service Gap</strong> (the room is fine, the service isn't).</p>
+
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="cost" style="color:var(--orange)">Marketing Gap</div>
+                <p>Hero shots promise bright, spacious, landmark-adjacent rooms — guests arrive to something visibly different, and trust erodes before check-in even finishes.</p>
+            </div>
+            <div class="problem-card">
+                <div class="cost" style="color:var(--red)">Service Gap</div>
+                <p>The room matches the photos, but staff, noise, or check-in friction is the real driver of dissatisfaction — a completely different fix than "reshoot the brochure."</p>
+            </div>
+            <div class="problem-card">
+                <div class="cost" style="color:var(--cyan)">8,000 reviews</div>
+                <p>Synthetic dataset across 8 UrbanStay properties (hotel, city, date, verified stay, rating, text) with a seeded "dark rooms / dark bathrooms" trend to prove early-warning detection works.</p>
+            </div>
+            <div class="problem-card">
+                <div class="cost" style="color:var(--purple-light)">The Goal</div>
+                <p>Turn messy, multimodal guest feedback — text, photos, metadata — into an actionable signal: what to fix, where, and how urgently.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MULTIMODAL DATA STRATEGY -->
+<section>
+    <div class="container">
+        <div class="section-label" style="color:var(--cyan)">02 · Data Strategy</div>
+        <h2 class="section-title">Three Signal Streams, One Fusion Layer</h2>
+        <p class="section-desc">No single data source tells the whole story. HospitAI combines text sentiment, visual evidence, and review metadata into one early-warning system.</p>
+        <div class="stack-grid">
+            <div class="stack-card">
+                <div class="stack-icon">💬</div>
+                <div class="stack-title">Text (Reviews)</div>
+                <ul class="stack-items">
+                    <li>TextBlob sentiment scoring (0–100)</li>
+                    <li>BERTopic amenity clustering</li>
+                    <li>e.g. "Cleanliness sentiment trending negative"</li>
+                </ul>
+            </div>
+            <div class="stack-card">
+                <div class="stack-icon">📷</div>
+                <div class="stack-title">Images (Photos)</div>
+                <ul class="stack-items">
+                    <li>Guest reality photo vs. marketing hero shot</li>
+                    <li>OpenCV six-lens Visual Discrepancy Score</li>
+                    <li>CNN + Grad-CAM damage severity classifier</li>
+                </ul>
+            </div>
+            <div class="stack-card">
+                <div class="stack-icon">🗂️</div>
+                <div class="stack-title">Metadata (Context)</div>
+                <ul class="stack-items">
+                    <li>Recency weighting (recent reviews matter more)</li>
+                    <li>Verified-stay trust weighting</li>
+                    <li>Property, city, and date joins</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VDS ENGINE -->
+<section class="bg-alt" id="vds-engine">
+    <div class="container">
+        <div class="section-label" style="color:var(--cyan)">03 · The Visual Discrepancy Score Engine</div>
+        <h2 class="section-title">Six OpenCV Lenses, One Composite Score</h2>
+        <p class="section-desc">The core image-processing pipeline computes a <strong style="color:white">Visual Discrepancy Score (VDS)</strong> between a hero marketing photo and a guest-uploaded reality photo across six analytical lenses, then blends them into a single 0–1 risk score.</p>
+
+        <table>
+            <thead><tr><th>Lens</th><th>Weight</th><th>OpenCV Technique</th><th>What It Catches</th></tr></thead>
+            <tbody>
+                <tr><td>Brightness</td><td>15%</td><td>Grayscale luma mean &amp; std-dev gap</td><td>Under/over-lit staging</td></tr>
+                <tr><td>Histogram</td><td>20%</td><td>Per-channel histogram correlation</td><td>Tonal / time-of-day mismatch</td></tr>
+                <tr><td>Clutter</td><td>20%</td><td>Canny edge density</td><td>Object density &amp; mess differences</td></tr>
+                <tr><td>Saturation</td><td>15%</td><td>HSV saturation-channel gap</td><td>Colour-grading &amp; filter deception</td></tr>
+                <tr><td>Sharpness</td><td>10%</td><td>Laplacian variance gap</td><td>Focus / staging quality gap</td></tr>
+                <tr><td>Perspective</td><td>20%</td><td>ORB keypoint scale ratio</td><td>Zoom-lens landmark deception</td></tr>
+            </tbody>
+        </table>
+
+        <p class="section-desc" style="margin-bottom:1.5rem;"><strong style="color:white">Case study — Hyatt Regency Washington D.C.:</strong> hero shot is a daytime street photo; guest photo is a twilight shot from the same corner.</p>
+
+        <div class="figure">
+            <img src="images/HospitAI/vds-hero-vs-guest-gauge.png" alt="Hyatt Regency hero marketing shot vs guest reality photo with composite Visual Discrepancy Score gauge reading 0.2035">
+            <figcaption>Side-by-side hero vs. guest image with the composite VDS rendered as a compliance-to-catfish gauge dial.</figcaption>
+        </div>
+
+        <div class="figure">
+            <img src="images/HospitAI/vds-lens-breakdown.png" alt="Bar chart and radar chart breaking down the six VDS lens scores for the Hyatt Regency case study">
+            <figcaption><strong>Most insightful output of the pipeline</strong> — per-lens bar chart (raw vs. weighted contribution) alongside a radar profile, showing at a glance that <strong>Histogram (0.495)</strong> is the dominant risk driver while Clutter and Perspective are near-zero.</figcaption>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card"><div class="metric-val risk-med">0.495</div><div class="metric-lbl">Histogram</div><div class="metric-sub">Strongest flag</div></div>
+            <div class="metric-card"><div class="metric-val risk-med">0.263</div><div class="metric-lbl">Brightness</div><div class="metric-sub">Hero 2.4× brighter</div></div>
+            <div class="metric-card"><div class="metric-val risk-med">0.254</div><div class="metric-lbl">Saturation</div><div class="metric-sub">μ 60 vs μ 124</div></div>
+            <div class="metric-card"><div class="metric-val risk-low">0.091</div><div class="metric-lbl">Perspective</div><div class="metric-sub">No zoom deception</div></div>
+            <div class="metric-card"><div class="metric-val risk-low">0.087</div><div class="metric-lbl">Sharpness</div><div class="metric-sub">Comparable focus</div></div>
+            <div class="metric-card"><div class="metric-val risk-low">0.000</div><div class="metric-lbl">Clutter</div><div class="metric-sub">Night hides clutter</div></div>
+        </div>
+
+        <div class="figure">
+            <img src="images/HospitAI/vds-pixel-level-audit.png" alt="Pixel-level reality audit showing HSV saturation histograms, stacked Canny edge maps, and a sharpness difference heatmap">
+            <figcaption>Pixel-level audit: HSV saturation distributions (colour-grading gap), stacked Canny edge maps (object density), and a green/red Laplacian sharpness-difference heatmap.</figcaption>
+        </div>
+
+        <div style="text-align:center;margin-top:1rem;">
+            <span class="badge-compliant">Composite VDS = 0.2036 → 🟢 COMPLIANT</span>
+            <p class="section-desc" style="margin:1rem auto 0;">The discrepancy is driven by <strong style="color:white">time-of-day photography</strong> (day vs. night), not spatial manipulation — the model's recommendation was to add a twilight hero shot to the listing rather than penalize the property.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LANDMARK ZOOM DECEPTION / INTERPRETABLE CNN -->
+<section id="architecture">
+    <div class="container">
+        <div class="section-label" style="color:var(--purple-light)">04 · Visual Proximity — Landmark Zoom Detection</div>
+        <h2 class="section-title">A Hand-Built, Interpretable CNN</h2>
+        <p class="section-desc">Alongside the pretrained MobileNetV2 classifier (below), the team hand-built a tiny 3-layer CNN with <strong style="color:white">no pretraining</strong> so every activation stays interpretable — purpose-built to detect "the Capitol looks closer in the ad than it really is."</p>
+
+        <div class="pipeline">
+            <div class="agent" style="border-color:rgba(6,182,212,.35)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">1</div>
+                <div class="agent-icon">📐</div>
+                <div class="agent-name">Conv-1 · Sobel X + Y</div>
+                <div class="agent-desc">Edge-magnitude map isolates the landmark's silhouette</div>
+                <span class="agent-type type-cv">Fixed Filter</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(6,182,212,.35)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">2</div>
+                <div class="agent-icon">🔬</div>
+                <div class="agent-name">Conv-2 · Laplacian</div>
+                <div class="agent-desc">Sharpness / focus activation highlights in-focus structures</div>
+                <span class="agent-type type-cv">Fixed Filter</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(6,182,212,.35)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">3</div>
+                <div class="agent-icon">🧭</div>
+                <div class="agent-name">Conv-3 · Gabor Bank ×4</div>
+                <div class="agent-desc">0°/45°/90°/135° orientation filters capture texture response</div>
+                <span class="agent-type type-cv">Fixed Filter</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(124,58,237,.4)">
+                <div class="agent-num" style="background:rgba(124,58,237,.2);color:var(--purple-light)">4</div>
+                <div class="agent-icon">📏</div>
+                <div class="agent-name">Landmark Proximity Score</div>
+                <div class="agent-desc">ReLU-activated feature maps → apparent size &amp; scale ratio</div>
+                <span class="agent-type type-ai">Scoring</span>
+            </div>
+        </div>
+
+        <div class="figure">
+            <img src="images/HospitAI/slide10-landmark-zoom-deception.png" alt="Capitol Building apparent size bar chart and proportional scale diagram comparing hero vs guest photos">
+            <figcaption>Screenshot — <em>"Visual Proximity: Verifying the Heart of the City."</em> The Capitol dome measures <strong style="color:white">2.28× wider and 1.19× taller</strong> in the hero shot than in the guest photo — quantified per-metric (width, height, dome prominence, area fraction, edge density) and rendered as a proportional scale diagram.</figcaption>
+        </div>
+        <div style="text-align:center;">
+            <span class="badge-medium">Landmark Proximity Deception Score (LPDS) = 0.3192 → 🟠 MEDIUM RISK</span>
+        </div>
+    </div>
+</section>
+
+<!-- CNN DAMAGE SEVERITY + GRAD-CAM -->
+<section class="bg-alt2">
+    <div class="container">
+        <div class="section-label" style="color:var(--purple-light)">05 · Damage Severity Classifier — Grad-CAM Explainability</div>
+        <h2 class="section-title">MobileNetV2 in Two Frameworks, Side by Side</h2>
+        <p class="section-desc">Guest photos ("furniture was trashed") are classified into four maintenance-severity tiers via transfer learning on <strong style="color:white">MobileNetV2</strong>, with <strong style="color:white">Grad-CAM</strong> heatmaps showing exactly which pixels drove the prediction — implemented independently in both PyTorch and TensorFlow/Keras to compare production trade-offs.</p>
+
+        <div class="pipeline">
+            <div class="agent" style="border-color:rgba(6,182,212,.35)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">1</div>
+                <div class="agent-icon">🖼️</div>
+                <div class="agent-name">Input 224×224×3</div>
+                <div class="agent-desc">Guest-uploaded hotel photo, ImageNet-normalized</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(6,182,212,.35)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">2</div>
+                <div class="agent-icon">🧊</div>
+                <div class="agent-name">MobileNetV2 (frozen)</div>
+                <div class="agent-desc">19 inverted-residual blocks, ImageNet-pretrained, feature extractor frozen</div>
+                <span class="agent-type type-cv">Transfer Learning</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(124,58,237,.4)">
+                <div class="agent-num" style="background:rgba(124,58,237,.2);color:var(--purple-light)">3</div>
+                <div class="agent-icon">🎯</div>
+                <div class="agent-name">Custom Head</div>
+                <div class="agent-desc">1280 → Dense(512)+BN+ReLU → Dense(128) → 4-class softmax</div>
+                <span class="agent-type type-ai">Trainable</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(236,72,153,.4)">
+                <div class="agent-num" style="background:rgba(236,72,153,.2);color:var(--pink)">4</div>
+                <div class="agent-icon">🔥</div>
+                <div class="agent-name">Grad-CAM Heatmap</div>
+                <div class="agent-desc">Gradient-weighted activation map explains the prediction visually</div>
+                <span class="agent-type type-ai">Explainability</span>
+            </div>
+        </div>
+
+        <div class="metrics-grid" style="margin-top:1rem;">
+            <div class="metric-card"><div class="metric-val risk-high">Critical</div><div class="metric-lbl">Class 0</div><div class="metric-sub">🚨 Immediate replacement</div></div>
+            <div class="metric-card"><div class="metric-val risk-high">Poor</div><div class="metric-lbl">Class 1</div><div class="metric-sub">🚨 Refurbish this quarter</div></div>
+            <div class="metric-card"><div class="metric-val risk-med">Fair</div><div class="metric-lbl">Class 2</div><div class="metric-sub">⚠️ Maintenance audit</div></div>
+            <div class="metric-card"><div class="metric-val risk-low">Good</div><div class="metric-lbl">Class 3</div><div class="metric-sub">✅ No action required</div></div>
+        </div>
+
+        <div class="decisions" style="margin-top:1.5rem;">
+            <div class="decision-card">
+                <h3>🔵 PyTorch / torchvision</h3>
+                <div class="chosen">Best for: research &amp; custom training</div>
+                <ul>
+                    <li>Grad-CAM via <code>register_full_backward_hook</code></li>
+                    <li>Normalization: <code>Normalize(mean, std)</code> → ~[-2, 2]</li>
+                    <li>Manual training loop, full control</li>
+                    <li>Export path: ONNX → CoreML / TFLite</li>
+                </ul>
+            </div>
+            <div class="decision-card">
+                <h3>🟠 TensorFlow / Keras</h3>
+                <div class="chosen">Best for: cloud &amp; mobile deployment</div>
+                <ul>
+                    <li>Grad-CAM via <code>tf.GradientTape()</code> context manager</li>
+                    <li>Normalization: <code>preprocess_input</code> → [-1, 1]</li>
+                    <li><code>model.fit()</code> or custom loop</li>
+                    <li>Export path: direct TFLite → Android / iOS</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="figure" style="margin-top:1.5rem;">
+            <figcaption style="margin-top:0;"><strong style="color:white">Debugging the Keras Grad-CAM:</strong> wrapping MobileNetV2 inside a Keras Functional Model hides its internal layer names, so <code>tf_model.get_layer('out_relu')</code> throws <code>ValueError: No such layer</code>. Fix: walk the <em>base</em> sub-model in reverse with a <code>find_last_conv_layer()</code> helper to auto-detect the correct target Conv2D/DepthwiseConv2D layer, then build the gradient sub-model from the base model directly instead of the wrapper.</figcaption>
+        </div>
+    </div>
+</section>
+
+<!-- AESTHETIC AUDITING -->
+<section>
+    <div class="container">
+        <div class="section-label" style="color:var(--cyan)">06 · Aesthetic Auditing — Turning UGC into Ad Spend ROI</div>
+        <h2 class="section-title">Scoring Guest Photos as Marketing Assets</h2>
+        <p class="section-desc">Not every guest photo is a liability — some are better than the current marketing shot. A weighted composite score (Sharpness 35% · AI-scored Rule-of-Thirds composition 40% · Warm-tone color grading 25%) flags user-generated content worth promoting to paid ad spend.</p>
+
+        <div class="figure">
+            <img src="images/HospitAI/slide11-aesthetic-audit-dashboard.png" alt="Dashboard comparing Zoku Amsterdam rooftop terrace vs The Pig Hotels country lounge across sharpness, rule-of-thirds, warm tone, and composite score">
+            <figcaption>Screenshot — Image A (Zoku Amsterdam rooftop) scores highest on raw sharpness (1.00 vs 0.82), but Image B (The Pig Hotels lounge) wins on composition and warm tone, landing an almost-tied composite score (0.5875 vs 0.5850) — close enough that either is ad-ready.</figcaption>
+        </div>
+    </div>
+</section>
+
+<!-- MULTIMODAL PIPELINE -->
+<section class="bg-alt">
+    <div class="container">
+        <div class="section-label" style="color:var(--orange)">07 · System Architecture</div>
+        <h2 class="section-title">The Fusion Pipeline</h2>
+        <p class="section-desc">Every signal — text, image, metadata — flows through one modular pipeline so a single Gap Detection layer can decide what's a Marketing Gap, a Service Gap, or genuinely compliant.</p>
+
+        <div class="pipeline">
+            <div class="agent" style="border-color:rgba(16,185,129,.3)">
+                <div class="agent-num" style="background:rgba(16,185,129,.2);color:var(--green)">1</div>
+                <div class="agent-icon">📥</div>
+                <div class="agent-name">Data Input</div>
+                <div class="agent-desc">Reviews, guest photos, hero shots, metadata</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(16,185,129,.3)">
+                <div class="agent-num" style="background:rgba(16,185,129,.2);color:var(--green)">2</div>
+                <div class="agent-icon">🏷️</div>
+                <div class="agent-name">Pre-Processing &amp; Tagging</div>
+                <div class="agent-desc">Text sentiment, photo evidence, marketing quality, amenity tags</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(6,182,212,.4)">
+                <div class="agent-num" style="background:rgba(6,182,212,.2);color:var(--cyan)">3</div>
+                <div class="agent-icon">🧩</div>
+                <div class="agent-name">Modular Intelligence</div>
+                <div class="agent-desc">VDS engine, CNN classifiers, sentiment/topic models</div>
+                <span class="agent-type type-ai">Core Models</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(124,58,237,.4)">
+                <div class="agent-num" style="background:rgba(124,58,237,.2);color:var(--purple-light)">4</div>
+                <div class="agent-icon">🔗</div>
+                <div class="agent-name">Fusion Engine</div>
+                <div class="agent-desc">Combines all signals with recency &amp; trust weighting</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(236,72,153,.4)">
+                <div class="agent-num" style="background:rgba(236,72,153,.2);color:var(--pink)">5</div>
+                <div class="agent-icon">🚦</div>
+                <div class="agent-name">Gap Detection &amp; Scoring</div>
+                <div class="agent-desc">Marketing Gap vs. Service Gap classification</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(245,158,11,.4)">
+                <div class="agent-num" style="background:rgba(245,158,11,.2);color:var(--orange)">6</div>
+                <div class="agent-icon">🧠</div>
+                <div class="agent-name">Decision Intelligence</div>
+                <div class="agent-desc">Prioritizes what to fix, re-shoot, or retrain operationally</div>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="agent" style="border-color:rgba(16,185,129,.3)">
+                <div class="agent-num" style="background:rgba(16,185,129,.2);color:var(--green)">7</div>
+                <div class="agent-icon">📤</div>
+                <div class="agent-name">Business Outputs</div>
+                <div class="agent-desc">Amenity risk map, maintenance priority, property scorecards, exec alerts</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECH STACK -->
+<section>
+    <div class="container">
+        <div class="section-label" style="color:var(--green)">08 · Technology Stack</div>
+        <h2 class="section-title">Built With</h2>
+        <div class="stack-grid">
+            <div class="stack-card">
+                <div class="stack-icon">🖼️</div>
+                <div class="stack-title">Computer Vision</div>
+                <ul class="stack-items">
+                    <li>OpenCV (Canny, ORB, HSV, Laplacian)</li>
+                    <li>scikit-image, NumPy / SciPy</li>
+                    <li>Matplotlib (dark-themed dashboards)</li>
+                    <li>Pillow</li>
+                </ul>
+            </div>
+            <div class="stack-card">
+                <div class="stack-icon">🧠</div>
+                <div class="stack-title">Deep Learning</div>
+                <ul class="stack-items">
+                    <li>PyTorch + torchvision</li>
+                    <li>TensorFlow / Keras</li>
+                    <li>MobileNetV2 (ImageNet pretrained)</li>
+                    <li>Grad-CAM (both frameworks)</li>
+                </ul>
+            </div>
+            <div class="stack-card">
+                <div class="stack-icon">💬</div>
+                <div class="stack-title">NLP</div>
+                <ul class="stack-items">
+                    <li>TextBlob (sentiment scoring)</li>
+                    <li>BERTopic (amenity clustering)</li>
+                </ul>
+            </div>
+            <div class="stack-card">
+                <div class="stack-icon">🐍</div>
+                <div class="stack-title">Environment</div>
+                <ul class="stack-items">
+                    <li>Python / Jupyter notebooks</li>
+                    <li>PyTorch &amp; TensorFlow benchmarked head-to-head</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="bg-alt2">
+    <div class="container">
+        <div class="section-label" style="color:var(--pink)">09 · Case Studies</div>
+        <h2 class="section-title">Two Reality Audits</h2>
+        <div class="test-grid">
+            <div class="test-card tc1">
+                <h3>🏛️ Hyatt Regency Washington D.C.</h3>
+                <p class="sub">Daytime hero shot vs. twilight guest photo, both featuring the U.S. Capitol</p>
+                <div class="test-result"><span>Composite VDS</span><strong style="color:var(--green)">0.2036 — Compliant</strong></div>
+                <div class="test-result"><span>Strongest signal</span><strong>Histogram correlation 0.009</strong></div>
+                <div class="test-result"><span>Landmark proximity (LPDS)</span><strong style="color:var(--orange)">0.3192 — Medium risk</strong></div>
+                <div class="test-result"><span>Capitol apparent size</span><strong>2.28× wider in hero shot</strong></div>
+                <div class="test-result"><span>Recommendation</span><strong style="color:var(--cyan)">Add a twilight hero shot</strong></div>
+            </div>
+            <div class="test-card tc2">
+                <h3>🛋️ Zoku Amsterdam vs. The Pig Hotels</h3>
+                <p class="sub">Aesthetic audit — rooftop terrace vs. country-house lounge, both guest-submitted</p>
+                <div class="test-result"><span>Sharpness (35%)</span><strong>Zoku 1.00 · Pig 0.82</strong></div>
+                <div class="test-result"><span>Rule-of-Thirds AI (40%)</span><strong>Zoku 0.41 · Pig 0.41</strong></div>
+                <div class="test-result"><span>Warm tone (25%)</span><strong>Zoku 0.30 · Pig 0.54</strong></div>
+                <div class="test-result"><span>Composite score</span><strong style="color:var(--green)">0.588 vs. 0.585 (near tie)</strong></div>
+                <div class="test-result"><span>Recommendation</span><strong style="color:var(--cyan)">Both ad-ready as UGC assets</strong></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section>
+    <div class="container">
+        <div class="section-label" style="color:var(--orange)">10 · Limitations &amp; Ethical Considerations</div>
+        <h2 class="section-title">Honest About the Prototype</h2>
+        <div class="ethical-grid">
+            <div class="ethical-card">
+                <span class="risk-label">Synthetic Dataset</span>
+                <h3>Reviews Are Generated, Not Real</h3>
+                <p>The 8,000-review dataset was generated for the prototype with a seeded trend to prove detection works — production deployment would need validation against real UrbanStay review data.</p>
+            </div>
+            <div class="ethical-card">
+                <span class="risk-label">No Ground-Truth Labels</span>
+                <h3>Damage Severity Is Unsupervised in Practice</h3>
+                <p>The four-tier severity classifier relies on MobileNetV2's general visual features rather than a hotel-damage-specific labeled training set — real deployment needs annotated maintenance photos.</p>
+            </div>
+            <div class="ethical-card">
+                <span class="risk-label">Single Case Studies</span>
+                <h3>Two Properties, Not a Fleet</h3>
+                <p>The VDS and aesthetic-audit results shown here are single illustrative pairs (Hyatt, Zoku, The Pig) — the scoring weights would need calibration across many more property pairs before being trusted at scale.</p>
+            </div>
+            <div class="ethical-card">
+                <span class="risk-label">Human in the Loop</span>
+                <h3>Flags, Not Verdicts</h3>
+                <p>VDS and severity scores are designed as prioritization signals for a human marketing/ops reviewer — not as an automated system that reshoots photos or penalizes properties without review.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="bg-alt">
+    <div class="container" style="text-align:center;">
+        <div class="section-label" style="color:var(--cyan);justify-content:center;">11 · Business Value</div>
+        <h2 class="section-title">Data Blindness → Visual Transparency</h2>
+        <div class="quote-card">
+            <p>"We stop selling a deceptive room and start selling a verified, high-truth experience — bridging the gap before it becomes a 1-star review."</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p style="margin-bottom:.5rem;">
+        Built by <strong style="color:white">Priyanka Patil</strong> &amp; team · UW Foster School of Business · MSIS Group Project
+    </p>
+    <p>
+        <a href="index.html">Portfolio</a> ·
+        <a href="index.html#hospit-ai">Project Card</a>
+    </p>
+</footer>
+
+</body>
+</html>

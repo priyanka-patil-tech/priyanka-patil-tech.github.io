@@ -51,10 +51,6 @@
 
                     <!-- Tech chips -->
                     <div class="tech-chips">
-                        <span class="tech-chip chip-company">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0076CE"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="#0076CE" stroke-width="2"/><text x="12" y="16" font-family="Arial" font-size="8" font-weight="bold" fill="#0076CE" text-anchor="middle">DELL</text></svg>
-                            Dell
-                        </span>
                         <span class="tech-chip">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D9FF" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="1"/><rect x="2" y="14" width="20" height="8" rx="1"/><line x1="6" y1="6" x2="6" y2="6" stroke-width="3"/><line x1="6" y1="18" x2="6" y2="18" stroke-width="3"/></svg>
                             Server Infrastructure
@@ -63,18 +59,10 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B24BF3" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
                             Machine Learning
                         </span>
-                        <span class="tech-chip chip-company">
-                            <svg width="14" height="14" viewBox="0 0 24 24"><text x="2" y="14" font-family="Arial" font-size="9" font-weight="bold" fill="#005587">HCL</text></svg>
-                            HCL
-                        </span>
-                        <span class="tech-chip chip-company">
-                            <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#0070AD" stroke-width="2"/><text x="12" y="16" font-family="Arial" font-size="6" font-weight="bold" fill="#0070AD" text-anchor="middle">CAP</text></svg>
-                            Capgemini
-                        </span>
-                        <span class="tech-chip">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><path d="M5 12h14M5 12l4-4M5 12l4 4M19 12l-4-4M19 12l-4 4"/></svg>
-                            ETL
-                        </span>
+                        <a href="business-analytics.html" class="tech-chip" style="text-decoration:none;cursor:pointer;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg>
+                            Business Analytics
+                        </a>
                         <span class="tech-chip">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D9FF" stroke-width="2"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><line x1="7" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="17" y2="12"/><line x1="12" y1="7" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="17"/></svg>
                             Data Pipelines
@@ -163,7 +151,8 @@
                         <a href="#guardian-llm" class="project-link-chip">🛡️ Guardian-LLM</a>
                         <a href="#tech-debt-negotiator" class="project-link-chip">💸 Tech Debt Negotiator</a>
                         <a href="#ai-price-pilot" class="project-link-chip">💰 AI Price Pilot</a>
-                        <a href="#hospit-ai" class="project-link-chip">🏥 Hospit AI</a>
+                        <a href="#hospit-ai" class="project-link-chip">🏨 HospitAI</a>
+                        <a href="#business-analytics" class="project-link-chip">📊 Career Intelligence</a>
                     </div>
                 </div>
 
@@ -196,7 +185,53 @@
                                     </div>
                                 </div>
 
-                                <!-- 2. UW Ascend Hackathon -->
+                                <!-- 2. HospitAI -->
+                                <div class="slider-card">
+                                    <div class="slider-card-img">
+                                        <a href="hospit-ai.html">
+                                            <img src="images/HospitAI/vds-lens-breakdown.png" alt="HospitAI Visual Discrepancy Score lens breakdown — bar and radar chart" style="object-fit:cover;" />
+                                        </a>
+                                    </div>
+                                    <div class="slider-card-body">
+                                        <h3>
+                                            <a href="hospit-ai.html" class="slider-project-link">HospitAI ↗</a>
+                                        </h3>
+                                        <p class="slider-company">Computer Vision · Multimodal Hospitality Reality Auditing</p>
+                                        <p class="slider-desc">"Catfish-No!" — a six-lens OpenCV engine quantifies the Visual Discrepancy between hero marketing photos and guest reality shots, while a PyTorch/TensorFlow MobileNetV2 + Grad-CAM classifier flags furniture damage severity from guest-uploaded images.</p>
+                                        <div class="slider-tags">
+                                            <span>OpenCV</span><span>CNN</span><span>Grad-CAM</span><span>Python</span>
+                                        </div>
+                                        <div style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+                                            <a href="hospit-ai.html#architecture" class="slider-action-btn">🏗️ System Architecture</a>
+                                            <a href="hospit-ai.html" class="slider-action-btn">📄 Full Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. AI Price Pilot -->
+                                <div class="slider-card">
+                                    <div class="slider-card-img">
+                                        <a href="ai-price-pilot.html">
+                                            <img src="images/AIPricePilot/price-optimizer.png" alt="AI Price Pilot Price Optimizer screen showing elasticity, price slider, and profit/revenue forecasts" style="object-fit:cover;object-position:top;" />
+                                        </a>
+                                    </div>
+                                    <div class="slider-card-body">
+                                        <h3>
+                                            <a href="ai-price-pilot.html" class="slider-project-link">AI Price Pilot ↗</a>
+                                        </h3>
+                                        <p class="slider-company">LLM Pricing Intelligence · Live on Cloud Run</p>
+                                        <p class="slider-desc">An LLM-powered pricing decision-support platform — simulates price elasticity in real time, converses with an AI analyst about any SKU, monitors competitors, and scores the confidence of its own data before recommending a price.</p>
+                                        <div class="slider-tags">
+                                            <span>LLM</span><span>Elasticity Modeling</span><span>Python</span>
+                                        </div>
+                                        <div style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+                                            <a href="ai-price-pilot.html#architecture" class="slider-action-btn">🏗️ System Design</a>
+                                            <a href="https://copy-of-pricepilot-800700491584.us-east1.run.app/" target="_blank" class="slider-action-btn">🚀 Live App</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 4. UW Ascend Hackathon -->
                                 <div class="slider-card">
                                     <div class="slider-card-img">
                                         <img src="images/72261188022873%20(2).png" alt="UW Ascend 2025 Hackathon Winner Certificate" style="object-fit:contain;background:#2d0b5e;padding:1rem;" />
@@ -211,7 +246,7 @@
                                     </div>
                                 </div>
 
-                                <!-- 3. Dell 8,000-Server Scale-Out -->
+                                <!-- 5. Dell 8,000-Server Scale-Out -->
                                 <div class="slider-card">
                                     <div class="slider-card-img">
                                         <img src="images/DatacenterApplication.jpg" alt="Data Center Application" style="object-fit:cover;" />
@@ -244,21 +279,6 @@
                 <div class="about-text">
                     <p class="lead">I'm a product-minded engineer currently pursuing my Master's in Information Systems at the University of Washington's Foster School of Business.</p>
                     <p>With 14 years of experience spanning data center infrastructure, automotive systems, telecommunications, and field service management, I've developed a unique ability to bridge the gap between technical implementation and business strategy.</p>
-                    <p>My journey has taken me from building field service optimization tools to leading monolith-to-microservices migrations supporting 8,000+ servers. I thrive at the intersection of engineering and product management, where I can translate customer pain points into scalable, reliable solutions that drive measurable business impact.</p>
-                    <div class="highlights">
-                        <div class="highlight-item">
-                            <div class="highlight-number">60%</div>
-                            <div class="highlight-label">Performance Boost</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-number">8K+</div>
-                            <div class="highlight-label">Servers Supported</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-number">90%</div>
-                            <div class="highlight-label">Security Issues Resolved</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -479,36 +499,59 @@
                     <div class="project-icon">💰</div>
                     <h3>AI Price Pilot</h3>
                     <p class="project-company">AI / MSIS Project</p>
-                    <p>Dynamic pricing optimization engine leveraging machine learning — uses time-series forecasting, regression models, and demand signals to recommend pricing strategies that maximize revenue while staying competitive.</p>
+                    <p>LLM-powered pricing decision-support platform — simulates price elasticity in real time, converses with an AI analyst about any SKU, monitors competitor pricing, and scores the confidence of its own data before recommending a price.</p>
                     <div class="project-tags">
-                        <span class="tag">ML</span>
-                        <span class="tag">Time-Series</span>
+                        <span class="tag">LLM</span>
+                        <span class="tag">Pricing Elasticity</span>
                         <span class="tag">Python</span>
-                        <span class="tag">Predictive Modeling</span>
+                        <span class="tag">Decision Support</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/priyanka-patil-tech" target="_blank" class="project-link-btn">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub
+                        <a href="ai-price-pilot.html" class="project-link-btn">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Project Details
+                        </a>
+                        <a href="https://copy-of-pricepilot-800700491584.us-east1.run.app/" target="_blank" class="project-link-btn">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Live App
                         </a>
                     </div>
                 </div>
 
                 <div class="project-card project-card-ai" id="hospit-ai">
-                    <div class="project-icon">🏥</div>
-                    <h3>Hospit AI</h3>
-                    <p class="project-company">AI / MSIS Project</p>
-                    <p>AI-assisted hospital operations platform that predicts patient flow, optimizes bed allocation, and surfaces operational bottlenecks in real-time — helping healthcare administrators reduce wait times and improve resource utilization.</p>
+                    <div class="project-icon">🏨</div>
+                    <h3>HospitAI</h3>
+                    <p class="project-company">AI / MSIS Group Project</p>
+                    <p>"Catfish-No!" multimodal reality-auditing platform for hospitality marketing — a six-lens OpenCV engine scores the Visual Discrepancy between hero marketing photos and guest reality shots, while a PyTorch/TensorFlow MobileNetV2 + Grad-CAM classifier flags furniture damage severity from guest-uploaded images.</p>
                     <div class="project-tags">
-                        <span class="tag">AI</span>
-                        <span class="tag">Healthcare</span>
-                        <span class="tag">Data Pipelines</span>
-                        <span class="tag">Dashboard</span>
+                        <span class="tag">Computer Vision</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">CNN / Grad-CAM</span>
+                        <span class="tag">NLP</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/priyanka-patil-tech" target="_blank" class="project-link-btn">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub
+                        <a href="hospit-ai.html" class="project-link-btn">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Project Details
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card project-card-ai" id="business-analytics">
+                    <div class="project-icon">📊</div>
+                    <h3>Career Intelligence: Levels.fyi Salary Analysis</h3>
+                    <p class="project-company">Data Analytics / Independent Project</p>
+                    <p>Cleaned and analyzed 62,642 self-reported tech salary records to answer which skills pay the most, which companies pay and retain best, and whether job-hopping pays off — backed by regression and classification models (71% role-prediction accuracy, R²=0.47 on salary).</p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Cleaning</span>
+                        <span class="tag">Predictive Modeling</span>
+                        <span class="tag">Business Analytics</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="business-analytics.html" class="project-link-btn">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Project Details
                         </a>
                     </div>
                 </div>
