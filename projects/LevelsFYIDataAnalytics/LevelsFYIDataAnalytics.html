@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An analysis of 62,642 Levels.fyi technology compensation records to inform career and compensation decisions.">
+    <title>Levels.fyi Career Intelligence - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white border-b border-gray-200 py-12">
+        <div class="max-w-5xl mx-auto px-4">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Career Intelligence: What 62,642 Tech Compensation Records Reveal</h1>
+            <p class="text-lg text-gray-600">A data-driven analysis of skills, employers, compensation, and career strategy using Levels.fyi self-reported salary data.</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">1</span>
+                Objective
+            </h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-gray-700 leading-relaxed">
+                Turn a noisy public compensation survey into a practical decision framework for job seekers: identify which skills are associated with higher pay, compare employers' compensation and retention patterns, evaluate the pay premium associated with job mobility, and assess how well career outcomes can be predicted from the available data.
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">2</span>
+                Data & Methodology
+            </h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-gray-700 leading-relaxed">
+                <p class="mb-4">Analyzed self-reported Levels.fyi compensation data spanning 219 companies, 786 locations, and 15 standardized job titles. Preparation and analysis included:</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Standardized company, title, and location fields; converted compensation fields to numeric values and checked outliers.</li>
+                    <li>Imputed missing experience and tenure values and removed noisy free-text fields.</li>
+                    <li>Grouped free-text job tags into 25 categories, encoded tags and education, and created experience and degree-level features.</li>
+                    <li>Compared Linear Regression, Gradient Boosting, and Random Forest approaches, including classification and regression models.</li>
+                    <li>Used Python, pandas, scikit-learn, seaborn, and Plotly.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">3</span>
+                Visual Analysis
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/skill-count-vs-comp.png" alt="Job-tag counts and average total yearly compensation for the top skills" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Skill popularity vs. pay:</strong> ML / AI and Product earn above what their frequency might suggest, while common tags such as Full Stack and Web Development sit nearer the lower pay tier.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/tag-tenure-correlation.png" alt="Heatmap of job tags correlated with tenure and experience" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Skill and career stage:</strong> Tag correlations with experience and tenure help distinguish emerging, in-demand roles from more established career paths.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/company-avg-tenure.png" alt="Average years at company for the top 20 employers" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Employer retention:</strong> Several legacy enterprise employers show longer average tenure, a directional signal to weigh alongside compensation.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/company-comp-breakdown.png" alt="Average base salary, stock, and bonus breakdown at selected companies" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Compensation mix:</strong> Employers differ in how total compensation is divided between base salary, stock, and bonus.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/hopper-stayer-comp.png" alt="Compensation distribution comparing employees with shorter and longer tenure" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Mobility and pay:</strong> The compensation distribution for employees below the median tenure is higher than for those at or above it.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/hopper-stayer-by-company.png" alt="Hopper and stayer shares across leading companies" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Mobility by employer:</strong> The share of shorter- and longer-tenure employees varies substantially across the leading companies.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/hopper-stayer-by-experience.png" alt="Hopper and stayer counts by years-of-experience group" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Mobility by experience:</strong> Stayers are more common in the first 0–4 years; hoppers outnumber stayers in each experience band from year five onward.</figcaption>
+                </figure>
+                <figure class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <img src="../../images/BusinessAnalytics/degree-distribution.png" alt="Distribution of highest degree among degree-holders in the dataset" class="object-contain w-full h-64 bg-gray-50">
+                    <figcaption class="p-4 text-sm text-gray-700"><strong>Education profile:</strong> Among degree-holders, 61% have a Bachelor's, 35% a Master's, and about 4% a Doctorate as their highest degree.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">4</span>
+                Insights & Business Outcomes
+            </h2>
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 text-gray-800 leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Skill investment:</strong> ML / AI ($231.6K average predicted compensation) and Distributed Systems ($227.3K) were the highest-paying tags in the analysis. Web Development, ML / AI, Product, and Full Stack also showed strong estimated compensation growth per additional year of experience.</li>
+                    <li><strong>Company choice:</strong> The employers with the highest compensation and the longest average tenure are not necessarily the same. Compare total compensation and its base/stock/bonus mix with retention patterns and personal priorities.</li>
+                    <li><strong>Job mobility:</strong> Hoppers represented 52.4% of records and averaged $213.4K compensation, versus $175.4K for stayers—a 22% observational gap. This association does not establish that changing jobs causes higher pay.</li>
+                    <li><strong>Career stage:</strong> Among employees with 0–4 years of experience, stayers had median compensation of $149K, below the overall dataset median of $191K. The comparison supports evaluating market opportunities, not treating tenure alone as a decision rule.</li>
+                    <li><strong>Education:</strong> Regression baseline estimates were $191,293 for Bachelor's, $200,488 for Master's, and $258,538 for Doctorate. These are model estimates from observational data, not guaranteed returns on a degree.</li>
+                    <li><strong>Limits:</strong> The source is self-reported and may not represent the full workforce. Smaller company samples make tenure comparisons directional, and unmeasured factors such as negotiation and timing affect compensation.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">5</span>
+                Predictive Modeling & Recommendations
+            </h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
+                <p class="text-gray-700 mb-4">Random Forest models used experience, education, location, and job tags as features. Training used 25,880 records and testing used 7,764.</p>
+                <table class="w-full text-left text-sm text-gray-700">
+                    <thead class="bg-blue-50 text-gray-900">
+                        <tr><th class="p-3">Outcome</th><th class="p-3">Model result</th><th class="p-3">Interpretation</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100"><td class="p-3 font-medium">Job title / role</td><td class="p-3">71.2% accuracy</td><td class="p-3">Most predictable outcome in the analysis.</td></tr>
+                        <tr class="border-b border-gray-100"><td class="p-3 font-medium">Total yearly compensation</td><td class="p-3">R² = 0.47; MAE $48,761</td><td class="p-3">Moderate signal; much of the variation remains unexplained.</td></tr>
+                        <tr class="border-b border-gray-100"><td class="p-3 font-medium">Company</td><td class="p-3">39.1% accuracy</td><td class="p-3">Company choice depends on factors beyond these features.</td></tr>
+                        <tr><td class="p-3 font-medium">Compensation mix</td><td class="p-3">R² ≈ 0</td><td class="p-3">Base/stock/bonus allocation is not reliably predicted.</td></tr>
+                    </tbody>
+                </table>
+                <ul class="list-disc list-inside space-y-2 mt-6 text-gray-700">
+                    <li>Prioritize ML / AI, Distributed Systems, or Product for skill exploration, while considering fit and individual circumstances.</li>
+                    <li>Separate compensation goals from retention preferences when comparing employers.</li>
+                    <li>Use the model as a starting point for research and negotiation, not as a verdict or guaranteed forecast.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="text-center pt-8 border-t border-gray-200 flex flex-wrap justify-center gap-4">
+            <a href="https://github.com/priyanka-patil-tech/LevelsFyiSalDataAnalysis" target="_blank" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition shadow-sm">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                View Code on GitHub
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>

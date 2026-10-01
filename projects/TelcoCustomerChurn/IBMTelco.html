@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telco Customer Churn Pipeline - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Project Header -->
+    <header class="bg-white border-b border-gray-200 py-12">
+        <div class="max-w-5xl mx-auto px-4">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Customer Churn Diagnostics: An Explainable BI Decision Engine for Retention</h1>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Section 1: Problem / Objective -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">1</span>
+                Objective
+            </h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-gray-700 leading-relaxed space-y-4">
+                    Identify high-leverage churn drivers across 7,043 subscribers by analyzing behavioral, demographic, and account data, and deliver an interactive, explainable retention decision tool (using SHAP). This enables marketing and retention teams to proactively prevent subscriber loss, optimize customer lifetime value (CLV), and protect subscription revenue where acquiring a new customer costs 5–10× more than retention.
+            </div>
+        </section>
+
+        <!-- Section 2: Actions Taken & Images -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">2</span>
+                Actions Taken & Methodology
+            </h2>
+            <div class="text-gray-700 leading-relaxed mb-8 space-y-4">
+                <ul class="list-disc list-inside space-y-2">
+                    <li><strong>Data Processing & Imbalance Handling:</strong> Addressed a moderate class imbalance (73.5% retained / 26.5% churned) by using F1 Score and AUC-ROC as primary metrics. Applied <code>class_weight='balanced'</code> for tree/logistic models and <code>scale_pos_weight</code> for XGBoost during a 70/30 stratified train/test split.</li>
+                    <li><strong>Modeling & Tuning:</strong> Evaluated 5 models (Logistic Regression, Decision Tree, Random Forest, XGBoost, and MLP). All models were tuned via 5-fold cross-validation with GridSearchCV. Random Forest yielded the highest F1 score (0.6387).</li>
+                    <li><strong>Explainability & Deployment:</strong> Integrated SHAP (SHapley Additive exPlanations) to decompose predictions into individual feature contributions, allowing business users to see the magnitude and direction of churn drivers via a Streamlit web app.</li>
+                </ul>
+            </div>
+
+            <!-- Image Placeholders Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Image 1 -->
+                <div class="bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                    <img src="TenureDistribution.png" alt="Tenure vs Churn" class="object-cover w-full h-52 rounded-t-lg">
+                    <div class="px-4 py-3 text-center text-gray-600 font-medium text-sm">Visualization 1: Tenure Distribution<br><span class="text-xs text-gray-400 font-normal">Shows median tenure gap (~10mo churned vs ~38mo retained)</span></div>
+                </div>
+                <!-- Image 2 -->
+                <div class="bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                    <img src="ChurnRateByContractType.png" alt="Contract Type" class="object-cover w-full h-52 rounded-t-lg">
+                    <div class="px-4 py-3 text-center text-gray-600 font-medium text-sm">Visualization 2: Churn by Contract Type<br><span class="text-xs text-gray-400 font-normal">Month-to-month (~43%) vs Two-year (~3%)</span></div>
+                </div>
+                <!-- Image 3 -->
+                <div class="bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                    <img src="ChurnByPaymentMethod.png" alt="Payment Method" class="object-cover w-full h-52 rounded-t-lg">
+                    <div class="px-4 py-3 text-center text-gray-600 font-medium text-sm">Visualization 3: Churn by Payment Method<br><span class="text-xs text-gray-400 font-normal">Electronic check (~45%) vs Auto-pay (~15-17%)</span></div>
+                </div>
+                <!-- Image 4 -->
+                <div class="bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                    <img src="ChurnRateByInternetService.png" alt="Internet Service" class="object-cover w-full h-52 rounded-t-lg">
+                    <div class="px-4 py-3 text-center text-gray-600 font-medium text-sm">Visualization 4: Charges by Internet Service<br><span class="text-xs text-gray-400 font-normal">Fiber optic 3x higher churn rate than DSL</span></div>
+                </div>
+                <!-- Image 5 (Full Width SHAP) -->
+                <div class="bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 md:col-span-2 overflow-hidden">
+                    <img src="Beeswarm.png" alt="SHAP Beeswarm" class="object-cover w-full h-80 rounded-t-lg">
+                    <div class="px-4 py-3 text-center text-gray-600 font-medium text-sm">SHAP Explainability: Beeswarm & Bar Charts<br><span class="text-xs text-gray-400 font-normal">Illustrates short tenure and contract type as massive prediction drivers</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Insights & Results -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-lg">3</span>
+                Deeper Insights & Business Outcomes
+            </h2>
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 text-gray-800 leading-relaxed space-y-4">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Tenure is the #1 Predictor:</strong> Median tenure for churned customers is just ~10 months (vs. 38 for retained). SHAP analysis confirms that the first 12 months represent the highest risk, requiring aggressive early-lifecycle engagement.</li>
+                    <li><strong>Contract Lock-in Strategy:</strong> Month-to-month customers churn at ~43%, compared to a mere ~3% for 2-year contracts. Converting flexible-plan customers to annual commitments is the highest-leverage retention lever.</li>
+                    <li><strong>Payment Friction & Engagement:</strong> Electronic check users churn at nearly double the rate of automatic payment users (~45% vs ~15%). Automatic payment enrollment serves as a critical commitment signal and practical retention tool.</li>
+                    <li><strong>Product Value Gap:</strong> Despite paying premium prices ($80-90/mo), Fiber Optic subscribers churn at 3× the rate of DSL users, indicating the product may not justify its cost or faces heavy competition.</li>
+                    <li><strong>Demographic Protection:</strong> Senior citizens without a partner churn at ~53%. Having a partner provides strong stickiness (dropping churn to ~17%), suggesting family/household bundle promotions are highly effective for retention.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- GitHub / Live App Links -->
+        <div class="text-center pt-8 border-t border-gray-200 flex justify-center gap-4">
+            <a href="https://priyanka-patil-telco-customer-churn.streamlit.app/" target="_blank" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-sm">
+                View Live Streamlit App
+            </a>
+            <a href="https://github.com/priyanka-patil-tech/telco-customer-churn-predictor" target="_blank" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition shadow-sm">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                View Code on GitHub
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>
